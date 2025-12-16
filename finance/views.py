@@ -12,6 +12,7 @@ from finance.permissions import IsAdminUserCustom , IsOwner
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 from .paginations import Mypagination
+from .filters import Filterexpense
 from django.db.models import Sum
 from datetime import date 
 
@@ -26,6 +27,7 @@ class CategoryApiView(APIView):
             categories = Category.objects.all()
             serializer = CategorySerializer(categories, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+
 
     def post(self, request):
         serializer = CategorySerializer(data=request.data)
@@ -66,6 +68,8 @@ class ExpenseViewSet (ModelViewSet) :
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer 
     permission_classes = [IsAuthenticated | IsOwner]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = Filterexpense
 
 
 # ----------------------------------------------------------------
