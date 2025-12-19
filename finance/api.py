@@ -6,11 +6,15 @@ from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
 from .permissions import AllowAny
 
+from rest_framework.authentication import BasicAuthentication
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
 
+@method_decorator(csrf_exempt , name='dispatch')
 class RegisterApiView (APIView) : 
-    def get (self , request) : 
+    def get (self , request) :  
         return Response (
             {"messages": "error please sir again!!!"} ,
               status=status.HTTP_405_METHOD_NOT_ALLOWED)
