@@ -5,7 +5,7 @@ from rest_framework import status
 from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
 from .permissions import AllowAny
-
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import BasicAuthentication
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -61,6 +61,8 @@ class LoginApiView(APIView) :
 
 
 class LogoutApiView (APIView) : 
+    permission_classes = [IsAuthenticated]
     def post (self , request) : 
+        
         logout(request)
         return Response ({"message" : "logout successfuly"} , status=status.HTTP_200_OK)

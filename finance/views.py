@@ -55,12 +55,15 @@ class CategoryApiView(APIView):
 
 
 class IncomeViewset (ModelViewSet) : 
+
     queryset = Income.objects.all()
     serializer_class = IncomeSerializer 
     permission_classes = [IsAuthenticated | IsAdminUserCustom]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category' , 'fullname' , 'date']
     pagination_class = Mypagination
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 
@@ -70,6 +73,9 @@ class ExpenseViewSet (ModelViewSet) :
     permission_classes = [IsAuthenticated | IsOwner]
     filter_backends = [DjangoFilterBackend]
     filterset_class = Filterexpense
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 
 # ----------------------------------------------------------------
@@ -80,16 +86,20 @@ class IncomeModelViewSet(ModelViewSet):
     @action(detail=False, methods=["get"])
     def monthly_report(self, request):
        today = date.today()
+       user=request.user
 
        total_income = Income.objects.filter(
+           user = user , 
            date__year = today.year , date__month =today.month
            ).aggregate(total = Sum("amount"))["total"] or 0
        
        total_expense = Expense.objects.filter(
+           user = user ,
            date__year = today.year , date__month = today.month
        ).aggregate(total = Sum("amount"))["total"] or 0 
 
        return Response ({
+           'user' : user.username,
            "month" : today.month,
            "total_income" : total_income,
            "total_expense" : total_expense,

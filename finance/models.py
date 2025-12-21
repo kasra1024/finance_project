@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
 
 class Category (models.Model) : 
@@ -8,6 +9,7 @@ class Category (models.Model) :
 
 # هر درامد فقط توی ی دسته جا میشه 
 class Income(models.Model) : 
+    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name='incomes' , null=True , blank=True)
     fullname = models.CharField(max_length=64 , default="")
     amount = models.IntegerField() 
     descriptions = models.CharField(max_length=256 , blank=True , null=True) 
@@ -18,6 +20,7 @@ class Income(models.Model) :
 
 # هر هزیت=نه هم توی دسته جا میشه 
 class Expense (models.Model) : 
+    user = models.ForeignKey(User , on_delete=models.CASCADE , related_name='expenses')
     fullname = models.CharField(max_length=64 , default="")
     amount = models.IntegerField() 
     descriptions = models.CharField(max_length=256 , blank=True , null=True) 
