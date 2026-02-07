@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <p>تعداد دسته‌ها: {{ category_list|length }}</p>
+    <meta charset="UTF-8">
+    <title>Category List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <h5 class="mb-3">دسته‌بندی‌ها</h5>
+
+    {% if category_list %}
+        <ul class="list-group">
+            {% for category in category_list %}
+                <li class="list-group-item">
+                    {{ category.name }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">هیچ دسته‌ای وجود ندارد</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

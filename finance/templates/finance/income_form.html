@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت درآمد</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f5f5f5;
+        }
+        .box {
+            width: 400px;
+            margin: 80px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>ثبت درآمد</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">ذخیره</button>
+    </form>
+</div>
+
+</body>
+</html>

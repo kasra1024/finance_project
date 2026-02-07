@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .box {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+        th {
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>داشبورد مالی</h1>
+
+    <div class="box">
+        <p>کل درآمد: <strong>{{ total_income }}</strong></p>
+        <p>کل هزینه: <strong>{{ total_expense }}</strong></p>
+    </div>
+
+    <div class="box">
+        <h3>درآمدها</h3>
+        <table>
+            <tr>
+                <th>عنوان</th>
+                <th>مبلغ</th>
+            </tr>
+            {% for income in incomes %}
+            <tr>
+                <td>{{ income.fullname }}</td>
+                <td>{{ income.amount }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">درآمدی ثبت نشده</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="box">
+        <h3>هزینه‌ها</h3>
+        <table>
+            <tr>
+                <th>عنوان</th>
+                <th>مبلغ</th>
+            </tr>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.fullname }}</td>
+                <td>{{ expense.amount }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">هزینه‌ای ثبت نشده</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
